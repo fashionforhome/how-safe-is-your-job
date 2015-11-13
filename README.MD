@@ -23,3 +23,30 @@ This makes it possible to access the app, by pointing the browser to [http://192
 |________80|<-->|3000________________________|
 vagrant box            docker container
 ```
+
+### How to
+Start the vagrant box
+```sh
+vagrant up
+```
+Login to the vagrant box
+```sh
+vagrant ssh
+```
+Build Docker image
+```sh
+cd /vagrant
+sudo docker build --rm -t app .
+```
+Run Docker container
+```sh
+sudo docker run --name=app -p 80:3000 -v $(pwd):/go/src/app -d app
+```
+To stop the container
+```sh
+sudo docker stop app
+```
+List all running containers
+```sh
+sudo docker ps
+```
