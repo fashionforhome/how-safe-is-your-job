@@ -1,3 +1,7 @@
 .idea/
 .vagrant/
 *.iml
+
+frontend/node_modules
+frontend/dist/js
+frontend/dist/bower_components
