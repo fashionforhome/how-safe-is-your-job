@@ -1,12 +1,10 @@
 /**
- * Created by Daniel Schulz on 16.11.2015.
+ * Just trying out some ES6.
  */
-
 $(document).ready(function () {
 
 	var func = p => p + 1;
 
-	$("#schwarzer").css("background-color", "black").html("test");
-
 	console.log(func(11));
+	console.log(_.first([5, 4, 3, 2, 1]));
 });
