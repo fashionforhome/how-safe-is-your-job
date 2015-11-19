@@ -9,9 +9,10 @@ module.exports = function (grunt) {
 			dist: {
 				files: [{
 					expand: true,
-					cwd: 'src/js/',
-					src: ['*.js'],
-					dest: 'dist/js/'
+					cwd: 'src/',
+					src: ['js/**/*.es6'],
+					dest: 'compiled/',
+					ext: ".js"
 				}]
 			}
 		},
@@ -21,8 +22,11 @@ module.exports = function (grunt) {
 					copy: false
 				}
 			}
+		},
+		browserify: {
+			'dist/js/app.js': ['compiled/js/app.js']
 		}
 	});
 
-	grunt.registerTask('default', ['bower:install','babel']);
+	grunt.registerTask('default', ['bower:install', 'babel', 'browserify']);
 };
