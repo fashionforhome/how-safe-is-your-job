@@ -29,4 +29,5 @@ module.exports = function (grunt) {
 	});
 
 	grunt.registerTask('default', ['bower:install', 'babel', 'browserify']);
+	grunt.registerTask('build-js', ['babel', 'browserify']);
 };

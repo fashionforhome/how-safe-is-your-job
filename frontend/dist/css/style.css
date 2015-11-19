@@ -1,0 +1,35 @@
+.red-box {
+	border: solid 1px red;
+}
+
+.fancy-font {
+	font-family: 'Kaushan Script', cursive;
+}
+
+.question-font-size {
+	font-size: 80px;
+}
+
+.answer-font-size {
+	font-size: 30px;
+}
+
+.vertical-center {
+	display: inline-block;
+	vertical-align: middle;
+	float: none;
+}
+
+#middle-container {
+	display: table;
+	min-height: 100vh;
+}
+
+#content-text {
+	display: table-cell;
+	vertical-align: middle;
+}
+
+#main-container {
+	background-color: whitesmoke;
+}
