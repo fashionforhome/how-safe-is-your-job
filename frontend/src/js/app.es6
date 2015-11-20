@@ -6,7 +6,6 @@ $(document).ready(function () {
 		console.log("clicked");
 	};
 
-
 	let urlParser = new url.URLParser(['name', 'stock', 'sayings']);
 	var urlParams = urlParser.parseURL(location.search);
 	let hasAllParams = urlParser.hasAllParams(location.search);
@@ -25,8 +24,6 @@ $(document).ready(function () {
 				$("#middle-container").html(template(context));
 			});
 		});
-
-
 	} else {
 		// show the starting page
 		$.get("templates/views/start.mustache", function (data) {
