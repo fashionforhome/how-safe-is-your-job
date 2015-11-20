@@ -6,30 +6,33 @@
 	font-family: 'Kaushan Script', cursive;
 }
 
-.question-font-size {
+.question-font {
 	font-size: 80px;
+	word-wrap: break-word;
 }
 
-.answer-font-size {
+.answer-font {
 	font-size: 30px;
+	font-style: italic;
+	word-wrap: break-word;
+	margin-top: 70px;
 }
 
 .vertical-center {
-	display: inline-block;
-	vertical-align: middle;
-	float: none;
-}
-
-#middle-container {
-	display: table;
-	min-height: 100vh;
-}
-
-#content-text {
 	display: table-cell;
 	vertical-align: middle;
+	max-width: 0;
+}
+
+.full-height-container {
+	display: table;
+	height: 100vh;
 }
 
 #main-container {
 	background-color: whitesmoke;
+}
+
+a.ninja-textlink {
+	text-decoration: none;
 }

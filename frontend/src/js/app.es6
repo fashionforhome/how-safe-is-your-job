@@ -1,10 +1,45 @@
-import * as math from "./math";
-console.log("2π = " + math.sum(math.pi, math.pi));
+import * as url from "./url";
 
-function getURLParameter(name) {
-	return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search) || [, ""])[1].replace(/\+/g, '%20')) || null
-}
+$(document).ready(function () {
 
-console.log('name: ' + getURLParameter('name'));
-console.log('stock: ' + getURLParameter('stock'));
-console.log('mapping: ' + getURLParameter('mapping'));
+	var showConfigurationView = function () {
+		console.log("clicked");
+	};
+
+
+	let urlParser = new url.URLParser(['name', 'stock', 'sayings']);
+	var urlParams = urlParser.parseURL(location.search);
+	let hasAllParams = urlParser.hasAllParams(location.search);
+	console.log(urlParams);
+	console.log(hasAllParams);
+
+	if (hasAllParams) {
+		// show the page for the specified person
+		$.get("templates/views/specific.mustache", function (data) {
+			let template = Handlebars.compile(data, {noEscape: true});
+			$("#main-container").html(template());
+
+			$.get("templates/statement.mustache", function (data) {
+				let template = Handlebars.compile(data, {noEscape: true});
+				let context = {question: "How safe is " + urlParams.name + "'s job?", answer: "Hard coded stuff!!!"};
+				$("#middle-container").html(template(context));
+			});
+		});
+
+
+	} else {
+		// show the starting page
+		$.get("templates/views/start.mustache", function (data) {
+			let template = Handlebars.compile(data, {noEscape: true});
+			$("#main-container").html(template());
+
+			$(".configuration-link").on("click", function (event) {
+				showConfigurationView();
+			})
+
+		});
+	}
+
+});
+
+
