@@ -13,7 +13,7 @@ export class URLParser {
 
 			let currentParamName = paramNamesArray[i];
 
-			params[currentParamName] = this.getURLParameter(url, currentParamName);
+			params[currentParamName] = URLParser.getURLParameter(url, currentParamName);
 
 		}
 
@@ -25,7 +25,7 @@ export class URLParser {
 
 		for (let i = 0; i < paramNamesArray.length; i++) {
 
-			if (!this.getURLParameter(url, paramNamesArray[i])) {
+			if (!URLParser.getURLParameter(url, paramNamesArray[i])) {
 				return false;
 			}
 

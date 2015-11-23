@@ -4,6 +4,8 @@ $(document).ready(function () {
 
 	var showConfigurationView = function () {
 		console.log("clicked");
+
+		$("#title").addClass("move-up");
 	};
 
 	let urlParser = new url.URLParser(['name', 'stock', 'sayings']);
@@ -33,7 +35,6 @@ $(document).ready(function () {
 			$(".configuration-link").on("click", function (event) {
 				showConfigurationView();
 			})
-
 		});
 	}
 
