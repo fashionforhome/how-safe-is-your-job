@@ -1,17 +1,25 @@
 <div class="full-height-container col-sm-12 red-box">
-	<div id="title" class="vertical-center red-box">
-		<p class="fancy-font question-font text-center">How safe is  <a class="ninja-textlink configuration-link" href="#">your</a> Job?</p>
-		<form role="form" class="creation-form col-sm-6 col-sm-offset-3">
+	<div id="title" class="red-box">
+		<p class="fancy-font question-font text-center">How safe is <a class="ninja-textlink configuration-link"
+																	   href="#">your</a> Job?</p>
+
+		<form id="creation-form" role="form" class="col-sm-6 col-sm-offset-3">
 			<div class="form-group">
-				<label for="email">Email address:</label>
-				<input type="email" class="form-control" id="email">
+				<label>Name:</label>
+				<input type="text" class="form-control" id="name" required>
 			</div>
 			<div class="form-group">
-				<label for="pwd">Password:</label>
-				<input type="password" class="form-control" id="pwd">
+				<label>ISIN:</label>
+				<input type="text" class="form-control" id="isin" required>
 			</div>
-			<div class="checkbox">
-				<label><input type="checkbox"> Remember me</label>
+			<label>Sayings:</label>
+
+			<div class="form-group">
+				<select id="sayings" class="form-control" required>
+					<option>Example1</option>
+					<option>Example2</option>
+					<option>Example3</option>
+				</select>
 			</div>
 			<button type="submit" class="btn btn-default">Submit</button>
 		</form>

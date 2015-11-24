@@ -18,7 +18,7 @@
 	margin-top: 70px;
 }
 
-.vertical-center {
+.vertical-center-cell {
 	display: table-cell;
 	vertical-align: middle;
 	max-width: 0;
@@ -37,19 +37,11 @@ a.ninja-textlink {
 	text-decoration: none;
 }
 
-.move-up {
-	animation-name: title-animation;
-	animation-duration: 1s;
+#title{
 	position: relative;
-	animation-fill-mode: forwards;
-	animation-timing-function: linear;
+	top: 35vh;
 }
 
-@keyframes title-animation {
-	from {
-		top: 0;
-	}
-	to {
-		top: -35vh;
-	}
+#creation-form{
+	display: none;
 }

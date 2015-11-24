@@ -2,10 +2,65 @@ import * as url from "./url";
 
 $(document).ready(function () {
 
-	var showConfigurationView = function () {
+	/**
+	 * Renders the starting page.
+	 */
+	var renderStartingPage = function () {
+		$.get("templates/views/start.mustache", function (data) {
+			let template = Handlebars.compile(data, {noEscape: true});
+			$("#main-container").html(template());
+
+			$(".configuration-link").on("click", function (event) {
+				showConfigurationForm();
+			});
+
+			$("#creation-form").on("submit", function (event) {
+				event.preventDefault();
+				console.log("submitted creation form");
+
+				let inputName = $(event.target).find("#name").val();
+				let inputStock = $(event.target).find("#isin").val();
+				let inputSayings = $(event.target).find("#sayings").val();
+				let inputParams = {name: inputName, sayings: inputSayings, stock: inputStock};
+
+				console.log(inputParams);
+
+				let searchString = "?name=" + encodeURIComponent(inputName) + "&stock=" + encodeURIComponent(inputStock) + "&sayings=" + encodeURIComponent(inputSayings);
+
+				console.log(searchString);
+
+				window.location.search = searchString;
+			});
+		});
+	};
+
+	/**
+	 * Shows the configuration dialog.
+	 */
+	var showConfigurationForm = function () {
 		console.log("clicked");
 
-		$("#title").addClass("move-up");
+		$("#title").animate({top: 0}, {
+			duration: 1000, easing: "linear", complete: function () {
+				$("#creation-form").fadeIn();
+			}
+		});
+	};
+
+	/**
+	 * Render the page for the specified person.
+	 */
+	var renderSpecificPage = function (parameters) {
+		$.get("templates/views/specific.mustache", function (data) {
+			let template = Handlebars.compile(data, {noEscape: true});
+			$("#main-container").html(template());
+
+			$.get("templates/statement.mustache", function (data) {
+				let template = Handlebars.compile(data, {noEscape: true});
+				let context = {question: "How safe is " + parameters.name + "'s job?", answer: "Hard coded stuff!!!"};
+				$("#middle-container").html(template(context));
+			});
+		});
 	};
 
 	let urlParser = new url.URLParser(['name', 'stock', 'sayings']);
@@ -15,27 +70,9 @@ $(document).ready(function () {
 	console.log(hasAllParams);
 
 	if (hasAllParams) {
-		// show the page for the specified person
-		$.get("templates/views/specific.mustache", function (data) {
-			let template = Handlebars.compile(data, {noEscape: true});
-			$("#main-container").html(template());
-
-			$.get("templates/statement.mustache", function (data) {
-				let template = Handlebars.compile(data, {noEscape: true});
-				let context = {question: "How safe is " + urlParams.name + "'s job?", answer: "Hard coded stuff!!!"};
-				$("#middle-container").html(template(context));
-			});
-		});
+		renderSpecificPage(urlParams);
 	} else {
-		// show the starting page
-		$.get("templates/views/start.mustache", function (data) {
-			let template = Handlebars.compile(data, {noEscape: true});
-			$("#main-container").html(template());
-
-			$(".configuration-link").on("click", function (event) {
-				showConfigurationView();
-			})
-		});
+		renderStartingPage();
 	}
 
 });
