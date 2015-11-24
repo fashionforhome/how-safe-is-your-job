@@ -1,4 +1,5 @@
 import * as url from "./url";
+import * as stock from "./stock";
 
 $(document).ready(function () {
 
@@ -51,6 +52,10 @@ $(document).ready(function () {
 	 * Render the page for the specified person.
 	 */
 	var renderSpecificPage = function (parameters) {
+
+		let quandl = new stock.QuandlDriver();
+		// TODO quandl.getStockData(options)
+
 		$.get("templates/views/specific.mustache", function (data) {
 			let template = Handlebars.compile(data, {noEscape: true});
 			$("#main-container").html(template());
@@ -66,6 +71,7 @@ $(document).ready(function () {
 	let urlParser = new url.URLParser(['name', 'stock', 'sayings']);
 	var urlParams = urlParser.parseURL(location.search);
 	let hasAllParams = urlParser.hasAllParams(location.search);
+	console.log("param names: " + urlParser.paramNames);
 	console.log(urlParams);
 	console.log(hasAllParams);
 
