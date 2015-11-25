@@ -18,6 +18,11 @@ export class QuandlDriver {
 		console.log("query: " + query);
 	}
 
+	/**
+	 * 
+	 * @param options [database, dataset, limit, column, from, to, order, period, transform]
+	 * @returns {string} URL to get the stock data with the given options as URL parameters
+	 */
 	buildQuery(options) {
 		var query = "https://www.quandl.com/api/v3/datasets/" + options['database'] + "/" + options['dataset'] + ".json?";
 

@@ -52,9 +52,10 @@ $(document).ready(function () {
 	 * Render the page for the specified person.
 	 */
 	var renderSpecificPage = function (parameters) {
-
-		let quandl = new stock.QuandlDriver();
+		
 		// TODO quandl.getStockData(options)
+		//let quandl = new stock.QuandlDriver(getAPIKey());
+		
 
 		$.get("templates/views/specific.mustache", function (data) {
 			let template = Handlebars.compile(data, {noEscape: true});
@@ -67,6 +68,17 @@ $(document).ready(function () {
 			});
 		});
 	};
+
+	/**
+	 * TODO in another function check if the API key is valid if not return null
+	 */
+	//var getAPIKey = function () {
+	//	var apiKey;
+	//	$.getJSON("config.json", function (json) {
+	//
+	//	});
+	//};
+
 
 	let urlParser = new url.URLParser(['name', 'stock', 'sayings']);
 	var urlParams = urlParser.parseURL(location.search);
