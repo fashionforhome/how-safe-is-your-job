@@ -1,5 +1,6 @@
 import * as url from "./url";
 import * as stock from "./stock";
+import * as sayings from "./sayings";
 
 $(document).ready(function () {
 
@@ -20,7 +21,7 @@ $(document).ready(function () {
 				console.log("submitted creation form");
 
 				let inputName = $(event.target).find("#name").val();
-				let inputStock = $(event.target).find("#isin").val();
+				let inputStock = $(event.target).find("#quandl").val();
 				let inputSayings = $(event.target).find("#sayings").val();
 				let inputParams = {name: inputName, sayings: inputSayings, stock: inputStock};
 
@@ -52,33 +53,53 @@ $(document).ready(function () {
 	 * Render the page for the specified person.
 	 */
 	var renderSpecificPage = function (parameters) {
-		
-		// TODO quandl.getStockData(options)
-		//let quandl = new stock.QuandlDriver(getAPIKey());
-		
+		$.when($.getJSON("config.json"), $.getJSON("sample-sayings.json")).done(function (config, sayingsMap) {
+			let apiKey = config[0].apiKey;
+			// TODO maybe check if the API key is valid
 
-		$.get("templates/views/specific.mustache", function (data) {
-			let template = Handlebars.compile(data, {noEscape: true});
-			$("#main-container").html(template());
+			console.log(apiKey);
+			let quandl = new stock.QuandlDriver(apiKey);
 
-			$.get("templates/statement.mustache", function (data) {
-				let template = Handlebars.compile(data, {noEscape: true});
-				let context = {question: "How safe is " + parameters.name + "'s job?", answer: "Hard coded stuff!!!"};
-				$("#middle-container").html(template(context));
-			});
+			let quandlCode = parameters.stock.split("/");
+
+			let quandlParams = {database: quandlCode[0], dataset: quandlCode[1], column: 1};
+
+			$.when(quandl.getStockData(quandlParams)).then(function (stockData) {
+
+				console.log("stockData ", stockData);
+
+				var average = quandl.calculateColumnAverage(stockData['dataset']['data']);
+
+				var currentStockPrice = stockData['dataset']['data'][0][1];
+
+				var currentPercentageStockStatus = currentStockPrice / average * 100;
+
+				console.log("currentStockPrice ", currentStockPrice);
+
+				console.log("average ", average);
+
+				console.log("currentPercentageStockStatus ", currentPercentageStockStatus);
+
+				let sayingsMapper = new sayings.SayingsMapper(sayingsMap[0]);
+
+				var saying = sayingsMapper.getClosestSaying(currentPercentageStockStatus);
+
+				$.get("templates/views/specific.mustache", function (data) {
+					let template = Handlebars.compile(data, {noEscape: true});
+					$("#main-container").html(template());
+
+					$.get("templates/statement.mustache", function (data) {
+						let template = Handlebars.compile(data, {noEscape: true});
+						let context = {
+							question: "How safe is " + parameters.name + "'s job?",
+							answer: saying
+						};
+						$("#middle-container").html(template(context));
+					});
+				});
+			}, renderStartingPage);
 		});
 	};
-
-	/**
-	 * TODO in another function check if the API key is valid if not return null
-	 */
-	//var getAPIKey = function () {
-	//	var apiKey;
-	//	$.getJSON("config.json", function (json) {
-	//
-	//	});
-	//};
-
 
 	let urlParser = new url.URLParser(['name', 'stock', 'sayings']);
 	var urlParams = urlParser.parseURL(location.search);

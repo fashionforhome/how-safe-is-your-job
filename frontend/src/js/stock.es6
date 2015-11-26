@@ -5,21 +5,37 @@ export class QuandlDriver {
 	}
 
 	/**
-	 * @param options [database, dataset, limit, column, from, to, order, period, transform]
-	 * @returns {null}
+	 * @param options [DATABASE, DATASET, column, limit, from, to, order, period, transform]
+	 * @returns {*} the jqXHR object of the request
 	 */
 	getStockData(options) {
 		if (!options['database'] || !options['dataset']) {
 			return null;
 		}
 
-		var query = this.buildQuery(options);
-
+		let query = this.buildQuery(options);
 		console.log("query: " + query);
+
+		return $.getJSON(query);
+	}
+
+
+	calculateColumnAverage(data) {
+		console.log(data);
+
+		let sum = 0;
+
+		for (let i = 0; i < data.length; i++) {
+			sum += data[i][1];
+		}
+
+		let avg = sum / data.length;
+
+		return avg;
 	}
 
 	/**
-	 * 
+	 *
 	 * @param options [database, dataset, limit, column, from, to, order, period, transform]
 	 * @returns {string} URL to get the stock data with the given options as URL parameters
 	 */

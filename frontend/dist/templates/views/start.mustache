@@ -9,8 +9,11 @@
 				<input type="text" class="form-control" id="name" required>
 			</div>
 			<div class="form-group">
-				<label>Quandl Code:</label>
-				<input type="text" class="form-control" id="isin" required>
+				<label>Quandl Code <a href="https://www.quandl.com/search?tags=[%22Stocks%22]"
+									  target="_blank" class="btn btn-link quandl-info-btn"><span
+						class="glyphicon glyphicon-question-sign"
+						aria-hidden="true"></span></a>:</label>
+				<input type="text" class="form-control" id="quandl" pattern="\w+/\w+" required>
 			</div>
 			<label>Sayings:</label>
 

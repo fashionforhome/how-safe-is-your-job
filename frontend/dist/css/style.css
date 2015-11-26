@@ -37,11 +37,15 @@ a.ninja-textlink {
 	text-decoration: none;
 }
 
-#title{
+#title {
 	position: relative;
 	top: 35vh;
 }
 
-#creation-form{
+#creation-form {
 	display: none;
+}
+
+.quandl-info-btn {
+	padding: 0;
 }
