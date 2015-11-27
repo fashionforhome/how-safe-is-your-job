@@ -88,6 +88,10 @@ $(document).ready(function () {
 					let template = Handlebars.compile(data, {noEscape: true});
 					$("#main-container").html(template());
 
+
+					// Set a callback to run when the Google Visualization API is loaded.
+					drawChart();
+
 					$.get("templates/statement.mustache", function (data) {
 						let template = Handlebars.compile(data, {noEscape: true});
 						let context = {
@@ -100,6 +104,40 @@ $(document).ready(function () {
 			}, renderStartingPage);
 		});
 	};
+
+	// Callback that creates and populates a data table,
+	// instantiates the pie chart, passes in the data and
+	// draws it.
+	var drawChart = function drawChart() {
+
+		console.log("drawing chart");
+
+		// Create the data table.
+		var data = new google.visualization.DataTable();
+		data.addColumn('string', 'Topping');
+		data.addColumn('number', 'Slices');
+		data.addRows([
+			['Mushrooms', 3],
+			['Onions', 1],
+			['Olives', 1],
+			['Zucchini', 1],
+			['Pepperoni', 2]
+		]);
+
+		// Set chart options
+		//var options = {
+		//	'title': 'How Much Pizza I Ate Last Night',
+		//	'width': 400,
+		//	'height': 300
+		//};
+
+		// Instantiate and draw our chart, passing in some options.
+		var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+		chart.draw(data,{});
+	};
+
+	// Load the Visualization API and the piechart package.
+	//google.load('visualization', '1.0', {'packages':['corechart']});
 
 	let urlParser = new url.URLParser(['name', 'stock', 'sayings']);
 	var urlParams = urlParser.parseURL(location.search);
