@@ -58,6 +58,8 @@ $(document).ready(function () {
 			// TODO maybe check if the API key is valid
 
 			console.log(apiKey);
+			console.log(sayingsMap);
+			
 			let quandl = new stock.QuandlDriver(apiKey);
 
 			let quandlCode = parameters.stock.split("/");

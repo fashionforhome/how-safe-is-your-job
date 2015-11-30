@@ -1,50 +1,14 @@
-[
-  {
-	"saying": "Lebenslänglich",
-	"value": 140
-  },
-  {
-	"saying": "Sicher noch ein paar Wochen...",
-	"value": 80
-  },
-  {
-	"saying": "Vielleicht noch bis zum Ende des Quartals",
-	"value": 85
-  },
-  {
-	"saying": "Ein paar Tage lang sicher noch!",
-	"value": 70
-  },
-  {
-	"saying": "Wenn es so weiter geht, wird er noch Beamter",
-	"value": 130
-  },
-  {
-	"saying": "Wie bei einer Achterbahn, ein auf und ab.",
-	"value": 100
-  },
-  {
-	"saying": "Kurz vor dem Aufprall",
-	"value": 50
-  },
-  {
-	"saying": "Die Luft wird langsam dünn",
-	"value": 60
-  },
-  {
-	"saying": "Vielleicht sollte er langsam schonmal die Schwimmweste anlegen",
-	"value": 55
-  },
-  {
-	"saying": "Bitte den Stuhl gerade stellen, Landung steht bevor.",
-	"value": 65
-  },
-  {
-	"saying": "Jetzt kommt ein steiler Aufstieg",
-	"value": 110
-  },
-  {
-	"saying": "Achtung, Luftlöcher in Sicht!",
-	"value": 90
-  }
-]
+{
+  "140": "Lebenslänglich",
+  "80": "Sicher noch ein paar Wochen...",
+  "85": "Vielleicht noch bis zum Ende des Quartals",
+  "70": "Ein paar Tage lang sicher noch!",
+  "130": "Wenn es so weiter geht, wird er noch Beamter",
+  "100": "Wie bei einer Achterbahn, ein auf und ab.",
+  "50.5": "Kurz vor dem Aufprall",
+  "60": "Die Luft wird langsam dünn",
+  "55": "Vielleicht sollte er langsam schonmal die Schwimmweste anlegen",
+  "65": "Bitte den Stuhl gerade stellen, Landung steht bevor.",
+  "110": "Jetzt kommt ein steiler Aufstieg",
+  "90": "Achtung, Luftlöcher in Sicht!"
+}

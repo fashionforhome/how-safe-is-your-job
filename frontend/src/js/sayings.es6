@@ -8,19 +8,19 @@ export class SayingsMapper {
 
 		let minDiff = null;
 		let resultKey = null;
-		for (let i = 0; i < this.sayings.length; i++) {
+		for (let currVal in this.sayings) {
 
-			let currDiff = this.sayings[i]['value'] - value;
+			let currDiff = parseFloat(currVal) - value;
 
 			currDiff = currDiff > 0 ? currDiff : currDiff * -1;
 
 			if (minDiff === null || currDiff < minDiff) {
 				minDiff = currDiff;
-				resultKey = i;
+				resultKey = currVal;
 			}
 
 		}
 
-		return this.sayings[resultKey]['saying'];
+		return this.sayings[resultKey];
 	}
 }
