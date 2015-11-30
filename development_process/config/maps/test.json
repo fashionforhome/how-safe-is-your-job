@@ -1,0 +1,17 @@
+{
+  "mapping": [
+    {
+      "upperBound": 10,
+      "value": "Bad"
+    },
+    {
+      "lowerBound": 10,
+      "upperBound": 20,
+      "value": "Good"
+    },
+    {
+      "lowerBound": 20,
+      "value": "Awesome"
+    }
+  ]
+}
