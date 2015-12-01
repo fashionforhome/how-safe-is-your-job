@@ -64,15 +64,15 @@ $(document).ready(function () {
 
 			let quandlCode = parameters.stock.split("/");
 
-			let quandlParams = {database: quandlCode[0], dataset: quandlCode[1], column: 1};
+			let quandlParams = {database: quandlCode[0], dataset: quandlCode[1], column: 2, order: 'asc'};
 
 			$.when(quandl.getStockData(quandlParams)).then(function (stockData) {
 
 				console.log("stockData ", stockData);
 
-				var average = quandl.calculateColumnAverage(stockData['dataset']['data']);
+				var average = quandl.calculateColumnAverage(stockData['dataset']['data'], 1);
 
-				var currentStockPrice = stockData['dataset']['data'][0][1];
+				var currentStockPrice = stockData['dataset']['data'][stockData['dataset']['data'].length - 1][1];
 
 				var currentPercentageStockStatus = currentStockPrice / average * 100;
 
@@ -90,9 +90,13 @@ $(document).ready(function () {
 					let template = Handlebars.compile(data, {noEscape: true});
 					$("#main-container").html(template());
 
+					drawChart(stockData['dataset']['data']);
+					$(window).on("resize", function () {
+						drawChart(stockData['dataset']['data']);
+					});
 
-					// Set a callback to run when the Google Visualization API is loaded.
-					drawChart();
+					$(".stock-name").html(stockData['dataset']['name']);
+					$(".stock-description").html(stockData['dataset']['description']);
 
 					$.get("templates/statement.mustache", function (data) {
 						let template = Handlebars.compile(data, {noEscape: true});
@@ -107,51 +111,43 @@ $(document).ready(function () {
 		});
 	};
 
-	// Callback that creates and populates a data table,
-	// instantiates the pie chart, passes in the data and
-	// draws it.
-	var drawChart = function drawChart() {
+	var drawChart = function drawChart(data) {
 
 		console.log("drawing chart");
 
-		var data = google.visualization.arrayToDataTable([
-			['Time', 'Stock Price'],
-			['2004-11-22', 1000],
-			['2005-11-22', 1170],
-			['2006-11-22', 660],
-			['2007-11-22', 1030],
-			['2008-11-22', 2000]
-		]);
+		let tableArray = [['Time', 'Stock Price']];
+		tableArray = tableArray.concat(data);
 
-		var options = {
+		console.log(tableArray);
+
+		let table = google.visualization.arrayToDataTable(tableArray);
+
+		let options = {
 			title: 'Stock Price',
-			titleTextStyle : {fontSize : "20"},
+			titleTextStyle: {fontSize: "20"},
 			curveType: 'function',
 			legend: {position: 'none'},
-			backgroundColor : 'whitesmoke'
+			backgroundColor: 'whitesmoke'
 		};
 
-		var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+		let chart = new google.visualization.LineChart(document.getElementById('chart_div'));
 
-		chart.draw(data, options);
+		chart.draw(table, options);
 
 		//remove unnecessary divs from body element
 		$("body>div:not(:first)").remove();
 	};
 
-	// Load the Visualization API and the piechart package.
-	//google.load('visualization', '1.0', {'packages':['corechart']});
-
 	let urlParser = new url.URLParser(['name', 'stock', 'sayings']);
 	var urlParams = urlParser.parseURL(location.search);
 	let hasAllParams = urlParser.hasAllParams(location.search);
+
 	console.log("param names: " + urlParser.paramNames);
 	console.log(urlParams);
 	console.log(hasAllParams);
 
 	if (hasAllParams) {
 		renderSpecificPage(urlParams);
-		$(window).on("resize", drawChart);
 	} else {
 		renderStartingPage();
 		$(window).off("resize", drawChart);
