@@ -12,7 +12,7 @@ $(document).ready(function () {
 			let template = Handlebars.compile(data, {noEscape: true});
 			$("#main-container").html(template());
 
-			$(".configuration-link").on("click", function (event) {
+			$(".configuration-link").on("click", function () {
 				showConfigurationForm();
 			});
 
@@ -55,6 +55,7 @@ $(document).ready(function () {
 	var renderSpecificPage = function (parameters) {
 		$.when($.getJSON("config.json"), $.getJSON("sample-sayings.json")).done(function (config, sayingsMap) {
 			let apiKey = config[0].apiKey;
+			
 			// TODO maybe check if the API key is valid
 
 			console.log(apiKey);
@@ -67,7 +68,6 @@ $(document).ready(function () {
 			let quandlParams = {database: quandlCode[0], dataset: quandlCode[1], column: 2, order: 'asc'};
 
 			$.when(quandl.getStockData(quandlParams)).then(function (stockData) {
-
 				console.log("stockData ", stockData);
 
 				var average = quandl.calculateColumnAverage(stockData['dataset']['data'], 1);
@@ -90,33 +90,36 @@ $(document).ready(function () {
 					let template = Handlebars.compile(data, {noEscape: true});
 					$("#main-container").html(template());
 
-					drawChart(stockData['dataset']['data']);
-					$(window).on("resize", function () {
-						drawChart(stockData['dataset']['data']);
-					});
+					$.when($.get("templates/statement.mustache"), $.get("templates/config-button.mustache")).then(function (statement, configButton) {
 
-					$(".stock-name").html(stockData['dataset']['name']);
-					$(".stock-description").html(stockData['dataset']['description']);
-
-					$.get("templates/statement.mustache", function (data) {
-						let template = Handlebars.compile(data, {noEscape: true});
+						// render the statement
+						let statementTemplate = Handlebars.compile(statement[0], {noEscape: true});
 						let context = {
 							question: "How safe is " + parameters.name + "'s job?",
 							answer: saying
 						};
-						$("#middle-container").html(template(context));
-					});
 
-					$.get("templates/config-button.mustache", function (data) {
-						let template = Handlebars.compile(data, {noEscape: true});
-						$("#toolbar").html(template());
+						$("#middle-container").html(statementTemplate(context));
 
+						// render the config button
+						let configButtonTemplate = Handlebars.compile(configButton[0], {noEscape: true});
+						$("#toolbar").html(configButtonTemplate());
+
+						// navigate to starting page on click
 						$(".config-btn").on("click", function () {
 							window.location.search = "";
 						});
 
-					});
+						// render the stock chart initially and on every resize
+						drawChart(stockData['dataset']['data']);
+						$(window).on("resize", function () {
+							drawChart(stockData['dataset']['data']);
+						});
 
+						// render stock description with heading
+						$(".stock-name").html(stockData['dataset']['name']);
+						$(".stock-description").html(stockData['dataset']['description']);
+					});
 				});
 			}, renderStartingPage);
 		});
