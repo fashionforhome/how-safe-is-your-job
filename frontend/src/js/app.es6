@@ -106,6 +106,17 @@ $(document).ready(function () {
 						};
 						$("#middle-container").html(template(context));
 					});
+
+					$.get("templates/config-button.mustache", function (data) {
+						let template = Handlebars.compile(data, {noEscape: true});
+						$("#toolbar").html(template());
+
+						$(".config-btn").on("click", function () {
+							window.location.search = "";
+						});
+
+					});
+
 				});
 			}, renderStartingPage);
 		});
@@ -127,7 +138,8 @@ $(document).ready(function () {
 			titleTextStyle: {fontSize: "20"},
 			curveType: 'function',
 			legend: {position: 'none'},
-			backgroundColor: 'whitesmoke'
+			backgroundColor: 'whitesmoke',
+			colors: ['#3366CC']
 		};
 
 		let chart = new google.visualization.LineChart(document.getElementById('chart_div'));
