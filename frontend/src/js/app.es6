@@ -59,7 +59,7 @@ $(document).ready(function () {
 
 			console.log(apiKey);
 			console.log(sayingsMap);
-			
+
 			let quandl = new stock.QuandlDriver(apiKey);
 
 			let quandlCode = parameters.stock.split("/");
@@ -114,28 +114,29 @@ $(document).ready(function () {
 
 		console.log("drawing chart");
 
-		// Create the data table.
-		var data = new google.visualization.DataTable();
-		data.addColumn('string', 'Topping');
-		data.addColumn('number', 'Slices');
-		data.addRows([
-			['Mushrooms', 3],
-			['Onions', 1],
-			['Olives', 1],
-			['Zucchini', 1],
-			['Pepperoni', 2]
+		var data = google.visualization.arrayToDataTable([
+			['Time', 'Stock Price'],
+			['2004-11-22', 1000],
+			['2005-11-22', 1170],
+			['2006-11-22', 660],
+			['2007-11-22', 1030],
+			['2008-11-22', 2000]
 		]);
 
-		// Set chart options
-		//var options = {
-		//	'title': 'How Much Pizza I Ate Last Night',
-		//	'width': 400,
-		//	'height': 300
-		//};
+		var options = {
+			title: 'Stock Price',
+			titleTextStyle : {fontSize : "20"},
+			curveType: 'function',
+			legend: {position: 'none'},
+			backgroundColor : 'whitesmoke'
+		};
 
-		// Instantiate and draw our chart, passing in some options.
-		var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
-		chart.draw(data,{});
+		var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+
+		chart.draw(data, options);
+
+		//remove unnecessary divs from body element
+		$("body>div:not(:first)").remove();
 	};
 
 	// Load the Visualization API and the piechart package.
@@ -150,8 +151,10 @@ $(document).ready(function () {
 
 	if (hasAllParams) {
 		renderSpecificPage(urlParams);
+		$(window).on("resize", drawChart);
 	} else {
 		renderStartingPage();
+		$(window).off("resize", drawChart);
 	}
 
 });
