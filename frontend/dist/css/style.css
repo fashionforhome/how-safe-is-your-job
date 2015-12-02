@@ -15,7 +15,7 @@ body {
 	font-size: 50px;
 	font-style: italic;
 	word-wrap: break-word;
-	margin-top: 100px;
+	margin-top: 10vh;
 }
 
 .full-height-container {
@@ -40,14 +40,23 @@ a.ninja-textlink {
 	padding: 0;
 }
 
-#left-container {
-	padding: 0;
+#toolbar {
+	height: 0;
 }
 
-#toolbar{
-	height:0;
-}
-
-.overlay{
+.overlay {
 	z-index: 2;
+}
+
+.stock-details {
+	margin-top: 25vh;
+}
+
+#chart_div {
+	height: 35vh;
+	margin-top: 35px;
+}
+
+.stock-name {
+	margin-top: 0;
 }

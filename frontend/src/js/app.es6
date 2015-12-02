@@ -104,7 +104,7 @@ $(document).ready(function () {
 							answer: saying
 						};
 
-						$("#middle-container").html(statementTemplate(context));
+						$(".statement-container").html(statementTemplate(context));
 
 						// render the config button
 						let configButtonTemplate = Handlebars.compile(configButton[0], {noEscape: true});
@@ -143,12 +143,13 @@ $(document).ready(function () {
 		let table = google.visualization.arrayToDataTable(tableArray);
 
 		let options = {
-			title: 'Stock Price',
-			titleTextStyle: {fontSize: "20"},
+			//title: 'Stock Price',
+			//titleTextStyle: {fontSize: "25", bold: false},
 			curveType: 'function',
 			legend: {position: 'none'},
 			backgroundColor: 'whitesmoke',
-			colors: ['#3366CC']
+			colors: ['#3366CC'],
+			chartArea:{top: 10}
 		};
 
 		let chart = new google.visualization.LineChart(document.getElementById('chart_div'));
