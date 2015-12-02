@@ -25,9 +25,16 @@ module.exports = function (grunt) {
 		},
 		browserify: {
 			'dist/js/app.js': ['compiled/js/app.js']
+		},
+		uglify: {
+			dist: {
+				files: {
+					'dist/js/app.min.js': ['dist/js/app.js']
+				}
+			}
 		}
 	});
 
-	grunt.registerTask('default', ['bower:install', 'babel', 'browserify']);
-	grunt.registerTask('build-js', ['babel', 'browserify']);
+	grunt.registerTask('default', ['bower:install', 'babel', 'browserify', 'uglify']);
+	grunt.registerTask('build-js', ['babel', 'browserify', 'uglify']);
 };
