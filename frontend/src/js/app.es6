@@ -110,11 +110,6 @@ $(document).ready(function () {
 						let configButtonTemplate = Handlebars.compile(configButton[0], {noEscape: true});
 						$("#toolbar").html(configButtonTemplate());
 
-						// navigate to the starting page on click
-						$(".config-btn").on("click", function () {
-							window.location.search = "";
-						});
-
 						// render the stock chart initially and on every resize
 						drawChart(stockData['dataset']['data']);
 						$(window).on("resize", function () {
