@@ -32,6 +32,10 @@ module.exports = function (grunt) {
 					'dist/js/app.min.js': ['dist/js/app.js']
 				}
 			}
+		},
+		watch: {
+			files: ['src/js/**/*.es6'],
+			tasks: ['babel', 'browserify', 'uglify']
 		}
 	});
 
