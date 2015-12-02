@@ -1,9 +1,19 @@
+/**
+ * Utility class which lets you extract URL parameters from an URL easily.
+ */
 export class URLParser {
 
+	/**
+	 * @param paramNames array containing the names of the URL parameters
+	 */
 	constructor(paramNames) {
 		this.paramNames = paramNames;
 	}
 
+	/**
+	 * @returns {{}} An object containing values for all this.paramNames.
+	 * If an parameter is absent in the URL, the parameter in the returned object will be null.
+	 */
 	parseURL(url) {
 		let params = {};
 
@@ -20,6 +30,9 @@ export class URLParser {
 		return params;
 	}
 
+	/**
+	 * Checks if the URL has values for all defined URL parameters.
+	 */
 	hasAllParams(url) {
 		let paramNamesArray = this.getParamNamesArray();
 
@@ -34,6 +47,10 @@ export class URLParser {
 		return true;
 	}
 
+	/**
+	 * Returns the parameter names as an array. The returned array will be empty if this.parameterNames is neither an array nor a string.
+	 * @returns {*}
+	 */
 	getParamNamesArray() {
 		let paramNamesArray;
 
@@ -47,6 +64,9 @@ export class URLParser {
 		return paramNamesArray;
 	}
 
+	/**
+	 * Get value for the given parameter name from the given URL. Returns null if the parameter is not found or has no value.
+	 */
 	static getURLParameter(url, name) {
 		return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(url) || [, ""])[1].replace(/\+/g, '%20')) || null;
 	}

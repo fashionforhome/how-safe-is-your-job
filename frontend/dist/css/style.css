@@ -1,13 +1,17 @@
+body {
+	background-color: whitesmoke;
+}
+
 .fancy-font {
 	font-family: 'Kaushan Script', cursive;
 }
 
-.question-font {
+.question {
 	font-size: 80px;
 	word-wrap: break-word;
 }
 
-.answer-font {
+.answer {
 	font-size: 50px;
 	font-style: italic;
 	word-wrap: break-word;
@@ -17,10 +21,6 @@
 .full-height-container {
 	display: table;
 	height: 100vh;
-}
-
-body {
-	background-color: whitesmoke;
 }
 
 a.ninja-textlink {

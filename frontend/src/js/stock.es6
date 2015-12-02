@@ -1,11 +1,21 @@
+/**
+ * Lets you retrieve data from the Quandl API easily.
+ */
 export class QuandlDriver {
 
+	/**
+	 * @param apiKey the key to the Quandl API which will be used for every request
+	 */
 	constructor(apiKey) {
 		this.apiKey = apiKey;
 	}
 
 	/**
-	 * @param options [DATABASE, DATASET, column, limit, from, to, order, period, transform]
+	 * Get stock data from the Quandl API.
+	 *
+	 * @see https://www.quandl.com/docs/api?json#datasets for the available parameters
+	 *
+	 * @param options [database, dataset, column, limit, from, to, order, period, transform]
 	 * @returns {*} the jqXHR object of the request
 	 */
 	getStockData(options) {
@@ -19,10 +29,10 @@ export class QuandlDriver {
 		return $.getJSON(query);
 	}
 
-
-	calculateColumnAverage(data, columnIndex) {
-		console.log(data);
-
+	/**
+	 * Calculates the total average for the given column in the given data array
+	 */
+	static calculateColumnAverage(data, columnIndex) {
 		let sum = 0;
 
 		for (let i = 0; i < data.length; i++) {
@@ -35,6 +45,9 @@ export class QuandlDriver {
 	}
 
 	/**
+	 * Build a query for the Quandl API.
+	 *
+	 * @see https://www.quandl.com/docs/api?json#datasets for the available parameters
 	 *
 	 * @param options [database, dataset, limit, column, from, to, order, period, transform]
 	 * @returns {string} URL to get the stock data with the given options as URL parameters
