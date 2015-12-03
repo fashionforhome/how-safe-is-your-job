@@ -8,9 +8,27 @@ $(document).ready(function () {
 	 * Renders the starting page.
 	 */
 	var renderStartingPage = function () {
-		$.get("templates/views/start.mustache", function (data) {
-			let template = Handlebars.compile(data, {noEscape: true});
-			$("#main-container").html(template());
+		$.when($.get("templates/views/start.mustache"), $.get("templates/creation-form.mustache"), $.getJSON("sayings")).then(function (startViewData, creationFormData, sayingsData) {
+			// render the starting page
+			let startViewTemplate = Handlebars.compile(startViewData[0], {noEscape: true});
+			$("#main-container").html(startViewTemplate());
+
+
+			let sayingsHtml = "";
+
+			for (let sayingsID in sayingsData[0]) {
+				if (sayingsData[0].hasOwnProperty(sayingsID)) {
+					let sayingsName = sayingsData[0][sayingsID];
+
+					sayingsHtml += '<option value="' + sayingsID + '">' + sayingsName + '</option>';
+				}
+			}
+
+			let context = {sayings: sayingsHtml.toString()};
+
+			// render the creation form
+			let creationFormTemplate = Handlebars.compile(creationFormData[0], {noEscape: true});
+			$("#creation-form-container").html(creationFormTemplate(context));
 
 			// show the the configuration form on click
 			$(".configuration-link").on("click", function () {
@@ -50,8 +68,12 @@ $(document).ready(function () {
 	 * Renders the page for the specified person.
 	 */
 	var renderSpecificPage = function (parameters) {
+
+		// path to the respective saying
+		let sayingsPath = "sayings/" + parameters.sayings + ".json";
+
 		// load the API key and the sayings
-		$.when($.getJSON("config.json"), $.getJSON("sample-sayings.json")).done(function (config, sayingsMap) {
+		$.when($.getJSON("config.json"), $.getJSON(sayingsPath)).then(function (config, sayingsMap) {
 			let apiKey = config[0].apiKey;
 
 			// TODO maybe check if the API key is valid
@@ -122,7 +144,7 @@ $(document).ready(function () {
 					});
 				});
 			}, renderStartingPage);
-		});
+		}, renderStartingPage);
 	};
 
 	/**
@@ -144,7 +166,7 @@ $(document).ready(function () {
 			legend: {position: 'none'},
 			backgroundColor: 'whitesmoke',
 			colors: ['#3366CC'],
-			chartArea:{top: 10}
+			chartArea: {top: 10}
 		};
 
 		let chart = new google.visualization.LineChart(document.getElementById('chart_div'));

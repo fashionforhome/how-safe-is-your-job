@@ -7,33 +7,6 @@
 			Job?
 		</p>
 
-		<form id="creation-form" role="form" class="col-sm-6 col-sm-offset-3">
-			<div class="form-group">
-				<label for="name">Name:</label>
-				<input id="name" type="text" class="form-control" required>
-			</div>
-
-			<div class="form-group">
-				<label for="quandl">Quandl Code
-					<a href="https://www.quandl.com/search?tags=[%22Stocks%22]" target="_blank"
-					   class="btn btn-link quandl-info-btn">
-						<span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
-					</a>:
-				</label>
-				<input id="quandl" type="text" class="form-control" pattern="\w+/\w+" required>
-			</div>
-
-			<div class="form-group">
-				<label for="sayings">Sayings:</label>
-				<select id="sayings" class="form-control" required>
-					<option>Example1</option>
-					<option>Example2</option>
-					<option>Example3</option>
-				</select>
-			</div>
-
-			<button type="submit" class="btn btn-default">Submit</button>
-		</form>
-
+		<div id="creation-form-container"></div>
 	</div>
 </div>
