@@ -30,13 +30,16 @@ $(document).ready(function () {
 			let creationFormTemplate = Handlebars.compile(creationFormData[0], {noEscape: true});
 			$("#creation-form-container").html(creationFormTemplate(context));
 
-			// show the the configuration form on a single click in an animated way and on a double click instantly
+			// show the configuration form on the first click in an animated way and on the second click instantly
+			let clicks = 0;
 			$(".configuration-link").on("click", function () {
-				showConfigurationFormAnimated();
-			}).on("dblclick", function () {
-				showConfigurationFormInstantly();
+				clicks++;
+				if (clicks === 1) {
+					showConfigurationFormAnimated();
+				} else if (clicks === 2) {
+					showConfigurationFormInstantly();
+				}
 			});
-
 
 			// navigate to the specific page configured by the user on submit
 			$("#creation-form").on("submit", function (event) {
