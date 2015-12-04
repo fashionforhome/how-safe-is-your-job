@@ -205,5 +205,3 @@ $(document).ready(function () {
 	}
 
 });
-
-
