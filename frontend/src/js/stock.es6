@@ -30,6 +30,26 @@ export class QuandlDriver {
 	}
 
 	/**
+	 * Searches for a stock using this Quandl API method:
+	 *
+	 * https://www.quandl.com/docs/api#dataset-search
+	 *
+	 * @param query the query string given to the search method of the Quandl API
+	 * @param callback a callback which gets the results of the search and filters them
+	 */
+	searchStock(query, callback) {
+		let url = "https://www.quandl.com/api/v3/datasets.json?query=" + query;
+		$.when($.getJSON(url)).then(function (data) {
+			console.log(data);
+		}, function () {
+			console.log("could'nt search");
+		});
+		
+		return
+	}
+
+
+	/**
 	 * Calculates the total average for the given column in the given data array
 	 */
 	static calculateColumnAverage(data, columnIndex) {

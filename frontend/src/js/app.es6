@@ -8,7 +8,13 @@ $(document).ready(function () {
 	 * Renders the starting page.
 	 */
 	var renderStartingPage = function () {
-		$.when($.get("templates/views/start.mustache"), $.get("templates/creation-form.mustache"), $.getJSON("sayings/index.json")).then(function (startViewData, creationFormData, sayingsData) {
+		$.when($.getJSON("config.json"), $.get("templates/views/start.mustache"), $.get("templates/creation-form.mustache"), $.getJSON("sayings/index.json")).then(function (config, startViewData, creationFormData, sayingsData) {
+			let apiKey = config[0].apiKey;
+
+			console.log("API key: ", apiKey);
+
+			let quandl = new stock.QuandlDriver(apiKey);
+
 			// render the starting page
 			let startViewTemplate = Handlebars.compile(startViewData[0], {noEscape: true});
 			$("#main-container").html(startViewTemplate());
@@ -40,6 +46,11 @@ $(document).ready(function () {
 					showConfigurationFormInstantly();
 				}
 			});
+
+			$("#quandl").on("keypress", function (event) {
+				quandl.searchStock($(event.target).val(), true);
+			});
+
 
 			// navigate to the specific page configured by the user on submit
 			$("#creation-form").on("submit", function (event) {
