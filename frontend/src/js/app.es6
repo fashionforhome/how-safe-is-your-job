@@ -8,7 +8,7 @@ $(document).ready(function () {
 	 * Renders the starting page.
 	 */
 	var renderStartingPage = function () {
-		$.when($.get("templates/views/start.mustache"), $.get("templates/creation-form.mustache"), $.getJSON("sayings")).then(function (startViewData, creationFormData, sayingsData) {
+		$.when($.get("templates/views/start.mustache"), $.get("templates/creation-form.mustache"), $.getJSON("sayings/index.json")).then(function (startViewData, creationFormData, sayingsData) {
 			// render the starting page
 			let startViewTemplate = Handlebars.compile(startViewData[0], {noEscape: true});
 			$("#main-container").html(startViewTemplate());
