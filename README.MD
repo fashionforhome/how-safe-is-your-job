@@ -1,4 +1,4 @@
-# How safe is your job?
+# How safe is your job? [![Dependency Status](https://www.versioneye.com/user/projects/56616bdc19aac4000e00000d/badge.svg?style=flat)](https://www.versioneye.com/user/projects/56616bdc19aac4000e00000d)
 
 A website which lets you see how safe a persons job is by analysing stock data from the [Quandl API](https://www.quandl.com).
 
