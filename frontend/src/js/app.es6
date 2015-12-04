@@ -30,10 +30,13 @@ $(document).ready(function () {
 			let creationFormTemplate = Handlebars.compile(creationFormData[0], {noEscape: true});
 			$("#creation-form-container").html(creationFormTemplate(context));
 
-			// show the the configuration form on click
+			// show the the configuration form on a single click in an animated way and on a double click instantly
 			$(".configuration-link").on("click", function () {
-				showConfigurationForm();
+				showConfigurationFormAnimated();
+			}).on("dblclick", function () {
+				showConfigurationFormInstantly();
 			});
+
 
 			// navigate to the specific page configured by the user on submit
 			$("#creation-form").on("submit", function (event) {
@@ -53,15 +56,23 @@ $(document).ready(function () {
 	};
 
 	/**
-	 * Shows the configuration dialog.
+	 * Shows the configuration dialog in an animated way.
 	 */
-	var showConfigurationForm = function () {
+	var showConfigurationFormAnimated = function () {
 		// let the title slide to the top and fade in the configuration form afterwards
 		$("#title").animate({top: 0}, {
 			duration: 1000, easing: "linear", complete: function () {
 				$("#creation-form").fadeIn();
 			}
 		});
+	};
+
+	/**
+	 * Shows the configuration dialog instantly.
+	 */
+	var showConfigurationFormInstantly = function () {
+		$("#title").finish().css({top: 0});
+		$("#creation-form").finish().css({display: "initial"});
 	};
 
 	/**
