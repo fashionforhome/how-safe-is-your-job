@@ -218,7 +218,7 @@ $(document).ready(function () {
 						// render the stock chart initially and on every resize
 						drawChart(stockData['dataset']['data'], optimalColumn);
 						$(window).on("resize", function () {
-							drawChart(stockData['dataset']['data']);
+							drawChart(stockData['dataset']['data'], optimalColumn);
 						});
 
 						// render stock description with heading
