@@ -59,6 +59,8 @@ $(document).ready(function () {
 				// empty searches are not permitted
 				if ($(event.target).val() !== "") {
 
+					$(".quandl-info-btn").removeClass("rotate");
+					
 					//cancel all search requests
 					for (let i = 0; i < searchRequests.length; i++) {
 						searchRequests[i].abort();
@@ -73,6 +75,8 @@ $(document).ready(function () {
 					// send the search request 1 second later to the Quandl API
 					searchTimeout = setTimeout(function () {
 
+						$(".quandl-info-btn").addClass("rotate");
+						
 						let searchRequest = quandl.searchStock(encodeURIComponent($(event.target).val()));
 						searchRequests.push(searchRequest);
 
@@ -102,6 +106,8 @@ $(document).ready(function () {
 							}
 
 							stocksElement.html(stocksHtml);
+
+							$(".quandl-info-btn").removeClass("rotate");
 						});
 					}, 1000);
 				}
