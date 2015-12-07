@@ -36,6 +36,8 @@ $(document).ready(function () {
 			let creationFormTemplate = Handlebars.compile(creationFormData[0], {noEscape: true});
 			$("#creation-form-container").html(creationFormTemplate(context));
 
+			$('[data-toggle="tooltip"]').tooltip();
+			
 			// show the configuration form on the first click in an animated way and on the second click instantly
 			let clicks = 0;
 			$(".configuration-link").on("click", function () {
@@ -254,7 +256,6 @@ $(document).ready(function () {
 		//remove unnecessary divs from body element
 		$("body>div:not(:first)").remove();
 	};
-
 
 	let urlParser = new url.URLParser(['name', 'stock', 'sayings']);
 
