@@ -5,15 +5,23 @@
 	</div>
 
 	<div class="form-group">
-		<label for="quandl">Quandl Code
+		<!--TODO add tooltip to button-->
+		<label for="quandl">Stock
 			<a href="https://www.quandl.com/search?tags=[%22Stocks%22]" target="_blank"
 			   class="btn btn-link quandl-info-btn">
 				<span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
 			</a>:
 		</label>
-		<input id="quandl" type="text" class="form-control" pattern="\w+/\w+" required>
+		<input id="quandl" type="text" class="form-control" placeholder="Search" autocomplete="off">
 	</div>
 
+	<div class="form-group">
+		<select id="stocks" class="form-control" required>
+			<option value="" selected="selected" disabled="disabled">Select a stock!</option>
+			<!--Contains the search results-->
+		</select>
+	</div>
+	
 	<div class="form-group">
 		<label for="sayings">Sayings:</label>
 		<select id="sayings" class="form-control" required>

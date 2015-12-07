@@ -15,7 +15,7 @@ export class QuandlDriver {
 	 *
 	 * @see https://www.quandl.com/docs/api?json#datasets for the available parameters
 	 *
-	 * @param options [database, dataset, column, limit, from, to, order, period, transform]
+	 * @param options [database, dataset, column, limit, from, to, order, period, transform] note: strings given must be encoded
 	 * @returns {*} the jqXHR object of the request
 	 */
 	getStockData(options) {
@@ -34,18 +34,12 @@ export class QuandlDriver {
 	 *
 	 * https://www.quandl.com/docs/api#dataset-search
 	 *
-	 * @param query the query string given to the search method of the Quandl API
-	 * @param callback a callback which gets the results of the search and filters them
+	 * @param query the query string given to the search method of the Quandl API note: must be encoded
+	 * @param success a callback which is executed when the API call is successful
 	 */
-	searchStock(query, callback) {
-		let url = "https://www.quandl.com/api/v3/datasets.json?query=" + query;
-		$.when($.getJSON(url)).then(function (data) {
-			console.log(data);
-		}, function () {
-			console.log("could'nt search");
-		});
-		
-		return
+	searchStock(query, success) {
+		let url = "https://www.quandl.com/api/v3/datasets.json?auth_token=" + this.apiKey + "&query=" + query;
+		return $.getJSON(url, success);
 	}
 
 

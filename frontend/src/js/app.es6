@@ -47,17 +47,70 @@ $(document).ready(function () {
 				}
 			});
 
-			$("#quandl").on("keypress", function (event) {
-				quandl.searchStock($(event.target).val(), true);
-			});
+			// contains the jqXHR objects for all search requests
+			var searchRequests = [];
 
+			//contains the timeout of the last search request
+			var searchTimeout;
+			$("#quandl").keyup(function (event) {
+
+				// empty searches are not permitted
+				if ($(event.target).val() !== "") {
+
+					//cancel all search requests
+					for (let i = 0; i < searchRequests.length; i++) {
+						searchRequests[i].abort();
+						searchRequests.splice(i, 1);
+					}
+
+					// cancel the last request
+					if (searchTimeout) {
+						clearTimeout(searchTimeout);
+					}
+
+					// send the search request 1 second later to the Quandl API
+					searchTimeout = setTimeout(function () {
+
+						let searchRequest = quandl.searchStock(encodeURIComponent($(event.target).val()));
+						searchRequests.push(searchRequest);
+
+						$.when(searchRequest).then(function (data) {
+							let searchResult = [];
+							for (let i = 0; i < data["datasets"].length; i++) {
+
+								let currElem = data["datasets"][i];
+
+								// only add if the Quandl data set is for free
+								if (currElem["premium"] === false) {
+									searchResult.push({
+										name: currElem["name"],
+										quandlCode: currElem["database_code"] + "/" + currElem["dataset_code"],
+										desc: currElem["description"]
+									});
+								}
+							}
+
+							let stocksElement = $("#stocks").removeAttr("disabled").html("");
+
+							let stocksHtml = "";
+
+							for (let i = 0; i < searchResult.length; i++) {
+								let currElem = searchResult[i];
+								stocksHtml += '<option value="' + currElem["quandlCode"] + '">' + currElem["name"] + '</option>';
+							}
+
+							stocksElement.html(stocksHtml);
+						});
+					}, 1000);
+				}
+			});
 
 			// navigate to the specific page configured by the user on submit
 			$("#creation-form").on("submit", function (event) {
 				event.preventDefault();
 
 				let inputName = $(event.target).find("#name").val();
-				let inputStock = $(event.target).find("#quandl").val();
+				let inputStock = $(event.target).find("#stocks").val();
 				let inputSayings = $(event.target).find("#sayings").val();
 
 				// assemble the URL for the specific page
