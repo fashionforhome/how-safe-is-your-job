@@ -37,7 +37,7 @@ $(document).ready(function () {
 			$("#creation-form-container").html(creationFormTemplate(context));
 
 			$('[data-toggle="tooltip"]').tooltip();
-			
+
 			// show the configuration form on the first click in an animated way and on the second click instantly
 			let clicks = 0;
 			$(".configuration-link").on("click", function () {
@@ -167,17 +167,20 @@ $(document).ready(function () {
 			let quandlCode = parameters.stock.split("/");
 
 			// get the top stock price for each date ordered ascending from the data set 
-			let quandlParams = {database: quandlCode[0], dataset: quandlCode[1], column: 2, order: 'asc'};
+			let quandlParams = {database: quandlCode[0], dataset: quandlCode[1], order: 'asc'};
 
 			// load the stock data and then render specific page if the load was successful otherwise load the starting page
 			$.when(quandl.getStockData(quandlParams)).then(function (stockData) {
 				console.log("Quandl JSON: ", stockData);
 
+				// determine the optimal column
+				var optimalColumn = stock.QuandlDriver.determineOptimalColumn(stockData['dataset']['data']);
+
 				// calculate the total average price
-				var average = stock.QuandlDriver.calculateColumnAverage(stockData['dataset']['data'], 1);
+				var average = stock.QuandlDriver.calculateColumnAverage(stockData['dataset']['data'], optimalColumn);
 
 				// get the most recent stock price
-				var currentStockPrice = stockData['dataset']['data'][stockData['dataset']['data'].length - 1][1];
+				var currentStockPrice = stockData['dataset']['data'][stockData['dataset']['data'].length - 1][optimalColumn];
 
 				// calculate the percentage ratio of the total average price to the current price
 				var currentPercentageStockStatus = currentStockPrice / average * 100;
@@ -213,7 +216,7 @@ $(document).ready(function () {
 						$("#toolbar").html(configButtonTemplate());
 
 						// render the stock chart initially and on every resize
-						drawChart(stockData['dataset']['data']);
+						drawChart(stockData['dataset']['data'], optimalColumn);
 						$(window).on("resize", function () {
 							drawChart(stockData['dataset']['data']);
 						});
@@ -231,11 +234,13 @@ $(document).ready(function () {
 	 * Draws a line chart using the Google Charts API.
 	 * @param data data the chart should visualize
 	 */
-	var drawChart = function drawChart(data) {
+	var drawChart = function drawChart(data, columnIndex) {
 
 		// add a head to the data
 		let tableArray = [['Time', 'Stock Price']];
-		tableArray = tableArray.concat(data);
+		tableArray = tableArray.concat(data.map(function (value, index) {
+			return [value[0], value[columnIndex]];
+		}));
 
 		let table = google.visualization.arrayToDataTable(tableArray);
 

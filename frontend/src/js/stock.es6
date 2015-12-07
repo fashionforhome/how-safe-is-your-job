@@ -59,6 +59,17 @@ export class QuandlDriver {
 	}
 
 	/**
+	 * Returns the index of the optimal column. (Prefers the 2nd column)
+	 */
+	static determineOptimalColumn(data) {
+		if (data[0][2]) {
+			return 2;
+		}
+		return 1;
+
+	}
+
+	/**
 	 * Build a query for the Quandl API.
 	 *
 	 * @see https://www.quandl.com/docs/api?json#datasets for the available parameters
