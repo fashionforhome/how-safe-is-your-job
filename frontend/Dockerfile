@@ -1,3 +1,3 @@
 FROM nginx
 COPY dist /usr/share/nginx/html
-COPY docker/nginx/default.conf /etc/nginx/sites-enabled/default.conf
+COPY docker/nginx/default.conf /etc/nginx/conf.d/default.conf
