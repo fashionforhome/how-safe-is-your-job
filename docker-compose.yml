@@ -1,0 +1,13 @@
+web:
+  container_name: web
+  build: ./frontend
+  ports:
+    - 80:80
+  links:
+    - api
+
+api:
+  container_name: api
+  build: ./api
+  ports:
+    - 8080:8080

@@ -4,10 +4,12 @@ Vagrant.configure(2) do |config|
   config.vm.box = "ubuntu/trusty64"
   config.vm.box_check_update = true
   config.vm.network "private_network", ip: "192.168.33.10"
+  config.vbguest.auto_update = true
 
-  config.vm.provision "shell", inline: <<-SHELL
-     sudo apt-get update
-     sudo apt-get install -y curl
-     curl -sSL https://get.docker.com/ | sh
-  SHELL
+  config.vm.provider :virtualbox do |vm|
+      vm.memory = 1024
+      vm.customize ["setextradata", :id, "VBoxInternal2/SharedFoldersEnableSymlinksCreate/v-root", "1"]
+  end
+
+  config.vm.provision "shell", path: "bootstrap-vm.sh"
 end
