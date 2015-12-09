@@ -56,27 +56,27 @@ $(document).ready(function () {
 			var searchTimeout;
 			$("#quandl").keyup(function (event) {
 
+				$(".quandl-info-btn").removeClass("rotate");
+
+				//cancel all search requests
+				for (let i = 0; i < searchRequests.length; i++) {
+					searchRequests[i].abort();
+					searchRequests.splice(i, 1);
+				}
+
+				// cancel the last request
+				if (searchTimeout) {
+					clearTimeout(searchTimeout);
+				}
+
 				// empty searches are not permitted
 				if ($(event.target).val() !== "") {
-
-					$(".quandl-info-btn").removeClass("rotate");
-					
-					//cancel all search requests
-					for (let i = 0; i < searchRequests.length; i++) {
-						searchRequests[i].abort();
-						searchRequests.splice(i, 1);
-					}
-
-					// cancel the last request
-					if (searchTimeout) {
-						clearTimeout(searchTimeout);
-					}
 
 					// send the search request 1 second later to the Quandl API
 					searchTimeout = setTimeout(function () {
 
 						$(".quandl-info-btn").addClass("rotate");
-						
+
 						let searchRequest = quandl.searchStock(encodeURIComponent($(event.target).val()));
 						searchRequests.push(searchRequest);
 
@@ -172,7 +172,7 @@ $(document).ready(function () {
 			// one dimensional array containing the database code and the data set code for the Quandl data set
 			let quandlCode = parameters.stock.split("/");
 
-			// get the top stock price for each date ordered ascending from the data set 
+			// get the top stock price for each date ordered ascending from the data set
 			let quandlParams = {database: quandlCode[0], dataset: quandlCode[1], order: 'asc'};
 
 			// load the stock data and then render specific page if the load was successful otherwise load the starting page
