@@ -1,4 +1,4 @@
-# How safe is your job? [![Dependency Status](https://www.versioneye.com/user/projects/56616bdc19aac4000e00000d/badge.svg?style=flat)](https://www.versioneye.com/user/projects/56616bdc19aac4000e00000d)
+#How safe is your job?  ![][1] [![Dependency Status](https://www.versioneye.com/user/projects/56616bdc19aac4000e00000d/badge.svg?style=flat)](https://www.versioneye.com/user/projects/56616bdc19aac4000e00000d) 
 
 A website which lets you see how safe a persons job is by analysing stock data from the [Quandl API](https://www.quandl.com).
 
@@ -24,3 +24,5 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #### License
 
 "How safe is your job?" is open-sourced software licensed under the [GPL-3.0 license](http://opensource.org/licenses/GPL-3.0)
+
+[1]:  https://github.com/fashionforhome/how-safe-is-your-job/blob/master/frontend/dist/favicon.ico
