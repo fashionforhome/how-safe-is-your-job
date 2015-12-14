@@ -54,7 +54,7 @@ $(document).ready(function () {
 
 			//contains the timeout of the last search request
 			var searchTimeout;
-			$("#quandl").keyup(function (event) {
+			$("#quandl").on("input", function (event) {
 
 				$(".quandl-info-btn").removeClass("rotate");
 
