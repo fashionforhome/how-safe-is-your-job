@@ -40,7 +40,8 @@ $(document).ready(function () {
 
 			// show the configuration form on the first click in an animated way and on the second click instantly
 			let clicks = 0;
-			$(".configuration-link").on("click", function () {
+			$(".configuration-link").on("click", function (event) {
+				event.preventDefault();
 				clicks++;
 				if (clicks === 1) {
 					showConfigurationFormAnimated();
